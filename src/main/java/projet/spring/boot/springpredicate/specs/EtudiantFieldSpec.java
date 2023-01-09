@@ -6,7 +6,7 @@ import projet.spring.boot.springpredicate.service.dto.EtudiantDTO;
 import java.time.LocalDate;
 
 public class EtudiantFieldSpec {
-    public static Specification<EtudiantDTO> getSpecs(String nom, String prenom,Boolean active,LocalDate dateNaissance){
+    public static Specification<EtudiantDTO> getSpecs(String nom, String prenom,Boolean active,LocalDate dateNaissance,LocalDate dateStart,LocalDate dateEnd){
         Specification<EtudiantDTO>spec=null;
         Specification<EtudiantDTO>temp=null;
         if (nom!=null){
@@ -31,6 +31,10 @@ public class EtudiantFieldSpec {
         }
         if (dateNaissance!=null){
             spec=getEtudiantByBrithDay(dateNaissance);
+            temp=spec!=null?Specification.where(spec).and(temp):temp;
+        }
+        if (dateStart!=null && dateEnd!=null){
+            spec=getAllEtudiantByBrithDayBetween(dateStart,dateEnd);
             temp=spec!=null?Specification.where(spec).and(temp):temp;
         }
 
@@ -67,6 +71,11 @@ public class EtudiantFieldSpec {
     private static Specification<EtudiantDTO>getEtudiantByBrithDay(LocalDate dateNaissance){
         return (root, query, criteriaBuilder) -> {
             return criteriaBuilder.equal(root.get("dateNaissance"),dateNaissance);
+        };
+    }
+    private static Specification<EtudiantDTO>getAllEtudiantByBrithDayBetween(LocalDate dateStart,LocalDate dateEnd){
+        return (root, query, criteriaBuilder) -> {
+          return criteriaBuilder.between(root.get("dateNaissance"),dateStart,dateEnd);
         };
     }
 }

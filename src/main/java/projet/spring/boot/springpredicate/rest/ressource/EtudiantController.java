@@ -28,8 +28,12 @@ public class EtudiantController {
             @RequestParam(required = false)String prenom,
             @RequestParam(required = false)Boolean active,
             @RequestParam(required = false)
-            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateNaissance
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateNaissance,
+            @RequestParam(required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateStart,
+            @RequestParam(required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateEnd
             ){
-        return iEtudiant.search(pageNumber,pageSize,nom,prenom,active,dateNaissance);
+        return iEtudiant.search(pageNumber,pageSize,nom,prenom,active,dateNaissance,dateStart,dateEnd);
     }
 }
