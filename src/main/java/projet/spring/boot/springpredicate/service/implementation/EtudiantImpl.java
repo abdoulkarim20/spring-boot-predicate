@@ -23,9 +23,9 @@ public class EtudiantImpl implements IEtudiant {
     }
 
     @Override
-    public List<EtudiantDTO> search(Integer pageNumber,Integer pageSize,String nom, String prenom,Boolean active) {
+    public List<EtudiantDTO> search(Integer pageNumber,Integer pageSize,String nom, String prenom,Boolean active,LocalDate dateNaissance) {
         Pageable pageable= PageRequest.of(pageNumber,pageSize);
-        Specification<EtudiantDTO>etudiantDTOSpecification=EtudiantFieldSpec.getSpecs(nom,prenom,active);
+        Specification<EtudiantDTO>etudiantDTOSpecification=EtudiantFieldSpec.getSpecs(nom,prenom,active,dateNaissance);
         return etudiantRepository.findAll(etudiantDTOSpecification,pageable);
     }
 

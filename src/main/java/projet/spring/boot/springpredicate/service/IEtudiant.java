@@ -6,5 +6,5 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface IEtudiant {
-    List<EtudiantDTO> search(Integer pageNumber,Integer pageSize,String nom, String prenom,Boolean active);
+    List<EtudiantDTO> search(Integer pageNumber,Integer pageSize,String nom, String prenom,Boolean active,LocalDate dateNaissance);
 }

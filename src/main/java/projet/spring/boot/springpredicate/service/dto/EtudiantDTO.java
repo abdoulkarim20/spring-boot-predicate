@@ -1,11 +1,14 @@
 package projet.spring.boot.springpredicate.service.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 public class EtudiantDTO {
     private Long id;
     private String nom;
     private String prenom;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateNaissance;
     private Boolean active;
 

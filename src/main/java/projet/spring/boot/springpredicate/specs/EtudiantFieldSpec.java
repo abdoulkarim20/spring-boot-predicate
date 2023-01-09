@@ -3,8 +3,10 @@ package projet.spring.boot.springpredicate.specs;
 import org.springframework.data.jpa.domain.Specification;
 import projet.spring.boot.springpredicate.service.dto.EtudiantDTO;
 
+import java.time.LocalDate;
+
 public class EtudiantFieldSpec {
-    public static Specification<EtudiantDTO> getSpecs(String nom, String prenom,Boolean active){
+    public static Specification<EtudiantDTO> getSpecs(String nom, String prenom,Boolean active,LocalDate dateNaissance){
         Specification<EtudiantDTO>spec=null;
         Specification<EtudiantDTO>temp=null;
         if (nom!=null){
@@ -25,6 +27,10 @@ public class EtudiantFieldSpec {
             }else {
                 spec=getEtudiantByEtatIsDesactive(active);
             }
+            temp=spec!=null?Specification.where(spec).and(temp):temp;
+        }
+        if (dateNaissance!=null){
+            spec=getEtudiantByBrithDay(dateNaissance);
             temp=spec!=null?Specification.where(spec).and(temp):temp;
         }
 
@@ -56,6 +62,11 @@ public class EtudiantFieldSpec {
             /*Boolean value="true".equalsIgnoreCase(String.valueOf(active))?Boolean.TRUE:"false".equalsIgnoreCase(String.valueOf(active))?Boolean.FALSE:null;
             Boolean =true?criteriaBuilder.isTrue(root.get("active")):criteriaBuilder.isFalse(root.get("active"));*/
             return criteriaBuilder.isFalse(root.get("active"));
+        };
+    }
+    private static Specification<EtudiantDTO>getEtudiantByBrithDay(LocalDate dateNaissance){
+        return (root, query, criteriaBuilder) -> {
+            return criteriaBuilder.equal(root.get("dateNaissance"),dateNaissance);
         };
     }
 }
