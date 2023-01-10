@@ -2,6 +2,7 @@ package projet.spring.boot.springpredicate.service.implementation;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class EtudiantImpl implements IEtudiant {
 
     @Override
     public List<EtudiantDTO> search(Integer pageNumber,Integer pageSize,String nom, String prenom,Boolean active,LocalDate dateNaissance,LocalDate dateStart,LocalDate dateEnd) {
-        Pageable pageable= PageRequest.of(pageNumber,pageSize);
+        Pageable pageable= PageRequest.of(pageNumber,pageSize, Sort.by("dateNaissance").ascending());
         Specification<EtudiantDTO>etudiantDTOSpecification=EtudiantFieldSpec.getSpecs(nom,prenom,active,dateNaissance,dateStart,dateEnd);
         return etudiantRepository.findAll(etudiantDTOSpecification,pageable);
     }

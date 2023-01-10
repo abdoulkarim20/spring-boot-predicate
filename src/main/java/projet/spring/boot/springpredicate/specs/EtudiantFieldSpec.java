@@ -5,7 +5,6 @@ import projet.spring.boot.springpredicate.service.dto.EtudiantDTO;
 
 import javax.persistence.criteria.Predicate;
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class EtudiantFieldSpec {
     public static Specification<EtudiantDTO> getSpecs(String nom, String prenom,Boolean active,LocalDate dateNaissance,LocalDate dateStart,LocalDate dateEnd){
@@ -20,11 +19,7 @@ public class EtudiantFieldSpec {
             temp=spec!=null?Specification.where(spec).and(temp):temp;
         }
         if (active!=null){
-            if (active==true){
-                spec=getEtudiantByEtatIsActive(active);
-            }else {
-                spec=getEtudiantByEtatIsDesactive(active);
-            }
+            spec=getEtudiantByEtat(active);
             temp=spec!=null?Specification.where(spec).and(temp):temp;
         }
         if (dateNaissance!=null){
@@ -54,22 +49,17 @@ public class EtudiantFieldSpec {
             return criteriaBuilder.like(criteriaBuilder.lower(root.get("nom")),"%"+nom.toLowerCase()+"%");
         };
     }
-    private static Specification<EtudiantDTO>getEtudiantByEtatIsActive(Boolean active){
+    private static Specification<EtudiantDTO>getEtudiantByEtat(Boolean active){
         return (root, query, criteriaBuilder) -> {
-
-            /*Boolean value="true".equalsIgnoreCase(String.valueOf(active))?Boolean.TRUE:"false".equalsIgnoreCase(String.valueOf(active))?Boolean.FALSE:null;
-            Boolean =true?criteriaBuilder.isTrue(root.get("active")):criteriaBuilder.isFalse(root.get("active"));*/
-            return criteriaBuilder.isTrue(root.get("active"));
+            Predicate etat=active==true?criteriaBuilder.isTrue(root.get("active")):criteriaBuilder.isFalse(root.get("active"));
+            return etat;
         };
     }
-    private static Specification<EtudiantDTO>getEtudiantByEtatIsDesactive(Boolean active){
+   /* private static Specification<EtudiantDTO>getEtudiantByEtatIsDesactive(Boolean active){
         return (root, query, criteriaBuilder) -> {
-
-            /*Boolean value="true".equalsIgnoreCase(String.valueOf(active))?Boolean.TRUE:"false".equalsIgnoreCase(String.valueOf(active))?Boolean.FALSE:null;
-            Boolean =true?criteriaBuilder.isTrue(root.get("active")):criteriaBuilder.isFalse(root.get("active"));*/
             return criteriaBuilder.isFalse(root.get("active"));
         };
-    }
+    }*/
     private static Specification<EtudiantDTO>getEtudiantByBrithDay(LocalDate dateNaissance){
         return (root, query, criteriaBuilder) -> {
             return criteriaBuilder.equal(root.get("dateNaissance"),dateNaissance);
