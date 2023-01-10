@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import projet.spring.boot.springpredicate.entitie.Etudiant;
+import projet.spring.boot.springpredicate.repositorie.EtudiantRepository;
 import projet.spring.boot.springpredicate.service.IEtudiant;
 import projet.spring.boot.springpredicate.service.dto.EtudiantDTO;
 
@@ -15,9 +17,12 @@ import java.util.List;
 @RequestMapping("/api/*")
 public class EtudiantController {
     private IEtudiant iEtudiant;
+    private final EtudiantRepository etudiantRepository;
 
-    public EtudiantController(IEtudiant iEtudiant) {
+    public EtudiantController(IEtudiant iEtudiant,
+                              EtudiantRepository etudiantRepository) {
         this.iEtudiant = iEtudiant;
+        this.etudiantRepository = etudiantRepository;
     }
 
     @GetMapping("etudiants")

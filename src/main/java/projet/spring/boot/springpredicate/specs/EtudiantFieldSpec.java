@@ -3,7 +3,9 @@ package projet.spring.boot.springpredicate.specs;
 import org.springframework.data.jpa.domain.Specification;
 import projet.spring.boot.springpredicate.service.dto.EtudiantDTO;
 
+import javax.persistence.criteria.Predicate;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class EtudiantFieldSpec {
     public static Specification<EtudiantDTO> getSpecs(String nom, String prenom,Boolean active,LocalDate dateNaissance,LocalDate dateStart,LocalDate dateEnd){
@@ -13,10 +15,6 @@ public class EtudiantFieldSpec {
             spec=getEtudiantByNom(nom);
             temp=spec!=null?Specification.where(spec).and(temp):temp;
         }
-//        if (!dateNaissance.isEmpty() && nom!=null){
-//            spec=getEtudiantByNom(nom);
-//            temp=spec!=null?Specification.where(spec).and(temp):temp;
-//        }
         if (prenom!=null){
             spec=getEtudiantByPrenom(prenom);
             temp=spec!=null?Specification.where(spec).and(temp):temp;
@@ -35,6 +33,10 @@ public class EtudiantFieldSpec {
         }
         if (dateStart!=null && dateEnd!=null){
             spec=getAllEtudiantByBrithDayBetween(dateStart,dateEnd);
+            temp=spec!=null?Specification.where(spec).and(temp):temp;
+        }
+        if (dateNaissance!=null && active!=null){
+            spec=getEtudiantByBrithDayAndEtat(dateNaissance,active);
             temp=spec!=null?Specification.where(spec).and(temp):temp;
         }
 
@@ -76,6 +78,13 @@ public class EtudiantFieldSpec {
     private static Specification<EtudiantDTO>getAllEtudiantByBrithDayBetween(LocalDate dateStart,LocalDate dateEnd){
         return (root, query, criteriaBuilder) -> {
           return criteriaBuilder.between(root.get("dateNaissance"),dateStart,dateEnd);
+        };
+    }
+    private static Specification<EtudiantDTO>getEtudiantByBrithDayAndEtat(LocalDate dateNaissance,Boolean active){
+        return (root, query, criteriaBuilder) -> {
+            Predicate date= criteriaBuilder.equal(root.get("dateNaissance"),dateNaissance);
+            Predicate etat=active!=true?criteriaBuilder.isFalse(root.get("active")):criteriaBuilder.isTrue(root.get("active"));
+            return criteriaBuilder.and(date,etat);
         };
     }
 }
