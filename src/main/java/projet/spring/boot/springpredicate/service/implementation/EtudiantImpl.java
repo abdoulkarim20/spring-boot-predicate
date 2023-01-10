@@ -28,7 +28,6 @@ public class EtudiantImpl implements IEtudiant {
         Pageable pageable= PageRequest.of(pageNumber,pageSize, Sort.by("dateNaissance").ascending());
         Specification<EtudiantDTO>etudiantDTOSpecification=EtudiantFieldSpec.getSpecs(nom,prenom,active,dateNaissance,dateStart,dateEnd);
         return etudiantRepository.findAll(etudiantDTOSpecification,pageable);
-        /*Returne la pagination*/
     }
 
 }
