@@ -11,21 +11,24 @@ import projet.spring.boot.springpredicate.entitie.Etudiant;
 import projet.spring.boot.springpredicate.repositorie.EtudiantRepository;
 import projet.spring.boot.springpredicate.service.EtudiantService;
 import projet.spring.boot.springpredicate.service.dto.EtudiantDTO;
+import projet.spring.boot.springpredicate.service.dto.EtudiantDepartementDTO;
+import projet.spring.boot.springpredicate.service.mapper.EtudiantDepartementMapper;
 import projet.spring.boot.springpredicate.service.mapper.EtudiantMapper;
 import projet.spring.boot.springpredicate.specs.EtudiantFieldSpec;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Transactional
 @Service
 public class EtudiantServiceImpl implements EtudiantService {
     private EtudiantRepository etudiantRepository;
     private EtudiantMapper etudiantMapper;
+    private EtudiantDepartementMapper etudiantDepartementMapper;
 
-    public EtudiantServiceImpl(EtudiantRepository etudiantRepository, EtudiantMapper etudiantMapper) {
+    public EtudiantServiceImpl(EtudiantRepository etudiantRepository, EtudiantMapper etudiantMapper, EtudiantDepartementMapper etudiantDepartementMapper) {
         this.etudiantRepository = etudiantRepository;
         this.etudiantMapper = etudiantMapper;
+        this.etudiantDepartementMapper = etudiantDepartementMapper;
     }
 
     @Override
@@ -40,5 +43,12 @@ public class EtudiantServiceImpl implements EtudiantService {
         Etudiant etudiant=etudiantMapper.toEntity(etudiantDTO);
         return etudiantMapper.toDto(etudiantRepository.save(etudiant));
     }
+
+    @Override
+    public Page<EtudiantDepartementDTO> getAllEtudiantByFilter(int page, int size) {
+        Pageable pageable=PageRequest.of(page,size,Sort.by("dateNaissance").descending());
+        return etudiantRepository.findAll(pageable).map(etudiantDepartementMapper::toDto);
+    }
+
 
 }

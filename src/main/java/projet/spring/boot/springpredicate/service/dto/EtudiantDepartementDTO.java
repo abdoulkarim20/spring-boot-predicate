@@ -4,14 +4,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-public class EtudiantDTO {
+public class EtudiantDepartementDTO {
     private Long id;
     private String nom;
     private String prenom;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateNaissance;
     private Boolean active;
-    private DepartementDTO departement;
+    private String libelle;
 
     public Long getId() {
         return id;
@@ -53,11 +53,11 @@ public class EtudiantDTO {
         this.active = active;
     }
 
-    public DepartementDTO getDepartement() {
-        return departement;
+    public String getLibelle() {
+        return libelle;
     }
 
-    public void setDepartement(DepartementDTO departement) {
-        this.departement = departement;
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
     }
 }

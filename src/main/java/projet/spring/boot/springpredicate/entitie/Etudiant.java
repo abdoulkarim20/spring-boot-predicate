@@ -1,9 +1,7 @@
 package projet.spring.boot.springpredicate.entitie;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity(name = "etudiants")
@@ -15,6 +13,8 @@ public class Etudiant {
     private String prenom;
     private LocalDate dateNaissance;
     private Boolean active;
+    @ManyToOne
+    private Departement departement;
 
     public Long getId() {
         return id;
@@ -54,6 +54,14 @@ public class Etudiant {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Departement getDepartement() {
+        return departement;
+    }
+
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
     }
 
     @Override

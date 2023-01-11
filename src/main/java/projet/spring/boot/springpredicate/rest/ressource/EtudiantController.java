@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import projet.spring.boot.springpredicate.repositorie.EtudiantRepository;
 import projet.spring.boot.springpredicate.service.EtudiantService;
 import projet.spring.boot.springpredicate.service.dto.EtudiantDTO;
+import projet.spring.boot.springpredicate.service.dto.EtudiantDepartementDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,5 +42,12 @@ public class EtudiantController {
     @PostMapping("etudiants")
     public EtudiantDTO save(@RequestBody EtudiantDTO etudiantDTO){
         return etudiantService.save(etudiantDTO);
+    }
+    @GetMapping("etudiants/filter")
+    public Page<EtudiantDepartementDTO>getAllEtudiantByFiler(
+            @RequestParam(defaultValue = "0")int page,
+            @RequestParam(defaultValue = "5")int size
+    ){
+        return etudiantService.getAllEtudiantByFilter(page,size);
     }
 }
