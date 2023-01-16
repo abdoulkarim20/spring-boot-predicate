@@ -14,6 +14,7 @@ import projet.spring.boot.springpredicate.service.dto.EtudiantDTO;
 import projet.spring.boot.springpredicate.service.dto.EtudiantDepartementDTO;
 import projet.spring.boot.springpredicate.service.mapper.EtudiantDepartementMapper;
 import projet.spring.boot.springpredicate.service.mapper.EtudiantMapper;
+import projet.spring.boot.springpredicate.specs.EtudiantDepartementSpec;
 import projet.spring.boot.springpredicate.specs.EtudiantFieldSpec;
 
 import java.time.LocalDate;
@@ -45,9 +46,10 @@ public class EtudiantServiceImpl implements EtudiantService {
     }
 
     @Override
-    public Page<EtudiantDepartementDTO> getAllEtudiantByFilter(int page, int size) {
+    public Page<EtudiantDepartementDTO> getAllEtudiantByFilter(int page, int size,String libelle) {
         Pageable pageable=PageRequest.of(page,size,Sort.by("dateNaissance").descending());
-        return etudiantRepository.findAll(pageable).map(etudiantDepartementMapper::toDto);
+        Specification<Etudiant>etudiants=EtudiantDepartementSpec.getEtudiantByFilterField(libelle);
+        return etudiantRepository.findAllEtudiantByDepartement(etudiants,pageable).map(etudiantDepartementMapper::toDto);
     }
 
 

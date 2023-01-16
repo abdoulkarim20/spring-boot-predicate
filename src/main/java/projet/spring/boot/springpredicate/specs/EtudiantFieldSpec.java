@@ -6,7 +6,7 @@ import projet.spring.boot.springpredicate.service.dto.EtudiantDTO;
 import javax.persistence.criteria.Predicate;
 import java.time.LocalDate;
 
-public class EtudiantFieldSpec {
+public class    EtudiantFieldSpec {
     public static Specification<EtudiantDTO> getSpecs(String nom, String prenom,Boolean active,LocalDate dateNaissance,LocalDate dateStart,LocalDate dateEnd){
         Specification<EtudiantDTO>spec=null;
         Specification<EtudiantDTO>temp=null;

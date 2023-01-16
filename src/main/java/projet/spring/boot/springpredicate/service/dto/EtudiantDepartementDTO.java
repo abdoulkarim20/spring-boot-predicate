@@ -11,7 +11,7 @@ public class EtudiantDepartementDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateNaissance;
     private Boolean active;
-    private String libelle;
+    private DepartementDTO departement;
 
     public Long getId() {
         return id;
@@ -53,11 +53,11 @@ public class EtudiantDepartementDTO {
         this.active = active;
     }
 
-    public String getLibelle() {
-        return libelle;
+    public DepartementDTO getDepartement() {
+        return departement;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public void setDepartement(DepartementDTO departement) {
+        this.departement = departement;
     }
 }

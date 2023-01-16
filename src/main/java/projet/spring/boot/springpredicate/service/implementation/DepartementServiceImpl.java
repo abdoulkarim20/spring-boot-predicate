@@ -11,6 +11,9 @@ import projet.spring.boot.springpredicate.repositorie.DepartementRepository;
 import projet.spring.boot.springpredicate.service.DepartementService;
 import projet.spring.boot.springpredicate.service.dto.DepartementDTO;
 import projet.spring.boot.springpredicate.service.mapper.DepartementMapper;
+
+import java.util.List;
+
 @Service
 @Transactional
 public class DepartementServiceImpl implements DepartementService {
@@ -23,9 +26,15 @@ public class DepartementServiceImpl implements DepartementService {
     }
 
     @Override
-    public Page<DepartementDTO> getAllDepartement(int page, int size) {
-        Pageable pageable= PageRequest.of(page,size, Sort.by("libelle").descending());
-        Page<Departement>departements=departementRepository.findAll(pageable);
-        return departements.map(departementMapper::toDto);
+    public List<DepartementDTO> getAllDepartement() {
+        //Pageable pageable= PageRequest.of(page,size, Sort.by("libelle").descending());
+        List<Departement>departements=departementRepository.findAll();
+        return departementMapper.toDto(departements);
+    }
+
+    @Override
+    public DepartementDTO save(DepartementDTO departementDTO) {
+        Departement departement=departementRepository.save(departementMapper.toEntity(departementDTO));
+        return departementDTO;
     }
 }

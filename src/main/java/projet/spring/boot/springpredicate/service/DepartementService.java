@@ -3,6 +3,9 @@ package projet.spring.boot.springpredicate.service;
 import org.springframework.data.domain.Page;
 import projet.spring.boot.springpredicate.service.dto.DepartementDTO;
 
+import java.util.List;
+
 public interface DepartementService {
-    Page<DepartementDTO>getAllDepartement(int page,int size);
+    List<DepartementDTO> getAllDepartement();
+    DepartementDTO save(DepartementDTO departementDTO);
 }

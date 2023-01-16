@@ -46,8 +46,9 @@ public class EtudiantController {
     @GetMapping("etudiants/filter")
     public Page<EtudiantDepartementDTO>getAllEtudiantByFiler(
             @RequestParam(defaultValue = "0")int page,
-            @RequestParam(defaultValue = "5")int size
+            @RequestParam(defaultValue = "5")int size,
+            @RequestParam(required = false) String libelle
     ){
-        return etudiantService.getAllEtudiantByFilter(page,size);
+        return etudiantService.getAllEtudiantByFilter(page,size,libelle);
     }
 }
